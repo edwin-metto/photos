@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900 ">
+
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 mb-6">
+        <div class="flex justify-end space-x-4">
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">Profile</a>
+                <a href="{% url 'logout' %}" class="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">Login</a>
+                <a href="{% url 'register' %}" class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700">Register</a>
+            {% endif %}
+        </div>
+    </div>
+
+    
+    <div class="max-w-6xl mx-auto py-6 px-4 sm:px-6 lg:px-6">
+        <h1 class="text-3xl  text-center text-green-600 mb-8">Uploaded Images</h1>
+
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            {% for image in images %}
+                <div class="bg-white p-6 rounded-lg ">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">{{ image.title }}</h3>
+                    <img src="{{ image.image.url }}" alt="{{ image.title }}" class="w-full h-60   ">
+                    <p class="text-gray-600 mb-4">{{ image.description }}</p>  
+
+                    
+                    <div class="flex justify-between items-center">
+                        <p class="text-gray-600">Likes: {{ image.likes }} | Dislikes: {{ image.dislikes }}</p>
+                        <div class="flex space-x-2">
+                            <a href="{% url 'like_image' image.id %}" class="bg-indigo-500 text-white py-2 px-4 rounded-md ">Like</a>
+                            <a href="{% url 'dislike_image' image.id %}" class="bg-red-500 text-white py-2 px-4 rounded-md ">Dislike</a>
+                        </div>
+                    </div>
+                      
+                      <form method="POST" action="{% url 'delete_image' image.id %}" class="mt-4">
+                        {% csrf_token %}
+                        <button type="submit" class="w-full bg-red-500 text-white py-2 px-4 ">Delete Image</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>

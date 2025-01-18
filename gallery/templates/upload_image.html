@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Image</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-900 ">
+
+    
+    <div class="max-w-4xl mx-auto py-6 px-4 sm:px-6 lg:px-6">
+        <h1 class="text-3xl font-semibold text-center ">Upload an Image</h1>
+
+        
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                
+                <div class="space-y-4">
+                    <div>
+                        <label for="{{ form.title.id_for_label }}" class="block text-sm font-medium text-gray-700">Title</label>
+                        {{ form.title }}
+                    </div>
+                    <div>
+                        <label for="{{ form.image.id_for_label }}" class="block text-sm font-medium text-gray-700">Image</label>
+                        {{ form.image }}
+                    </div>
+                    <div>
+                        <label for="{{ form.description.id_for_label }}" class=" font-medium text-gray-700">Description</label>
+                        {{ form.description }}
+                    </div>
+                </div>
+
+                
+                <div class="mt-6">
+                    <button type="submit" class="w-full bg-indigo-600 text-white py-3 px-4 ">
+                        Upload Image
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
